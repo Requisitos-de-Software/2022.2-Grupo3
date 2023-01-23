@@ -2478,7 +2478,7 @@
 <td align="center">1.0</td>
 <td align="center">Criação do documento</td>
 <td align="center"><a href="https://github.com/AnHoff">Ana Luiza</a></td>
-<td align="center"></td>
+<td align="center"><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
 </tr>
 </tbody>
 </table>
@@ -2495,10 +2495,8 @@
 <li>🟢: o requisito está completamente implementado;</li>
 <li>🟡: o requisito está parcialmente implementado;</li>
 <li>🔴: o requisito não foi implementado;</li>
-<li>J/A: o requisito já estava implementado.</li>
 </ul>
 </li>
-<li><strong>Backward-From</strong>: link para seu rastro em backward-from;</li>
 <li><strong>Forward-From</strong>: link para seu rastro em forward-from.</li>
 </ul>
 <h2 id="matriz-geral_1"><a>Matriz Geral</a></h2>
@@ -2512,19 +2510,209 @@
 <th align="center">Elicitação</th>
 <th align="center">Artefatos</th>
 <th align="center">Implementação</th>
-<th align="center">Backward-from</th>
 <th align="center">Forward-from</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="center">RF01</td>
-<td align="center">Lalla</td>
+<td align="center">O aplicativo deve instruir o <a href="../../Modelagem/Lexicos/#l17-usuario">usuário</a> para a criação do <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a></td>
 <td align="center">Brainstorm</td>
-<td align="center">Cenários<br>Léxicos</td>
+<td align="center"><a href="../../Modelagem/UserCases/#11-cadastro">US01</a><br><a href="../../Modelagem/Lexicos/#l17-usuario">L17</a><br><a href="../../Modelagem/Lexicos/#l03-cnpj">L03</a><br><a href="../../Modelagem/CasosdeUso/#uc02-cadastro">UC02</a></td>
+<td align="center">🔴</td>
+<td align="center"><a href="../ForwardFrom/#bs01">BS01</a></td>
+</tr>
+<tr>
+<td align="center">RF02</td>
+<td align="center">Implementação de um sistema de <a href="../../Modelagem/Lexicos/#l01-acessar">login</a></td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/UserCases/#21-login">US03</a><br><a href="../../Modelagem/Lexicos/#l01-acessar">L01</a><br> <a href="../../Modelagem/CasosdeUso/#uc01-fazer-login">UC01</a></td>
 <td align="center">🟢</td>
-<td align="center">link</td>
-<td align="center">link</td>
+<td align="center"><a href="../ForwardFrom/#bs02">BS02</a></td>
+</tr>
+<tr>
+<td align="center">RF03</td>
+<td align="center">O aplicativo deve <a href="../../Modelagem/Lexicos/#l09-emitir">emitir</a> um lembrete para o pagamento do <a href="../../Modelagem/Lexicos/#l07-das">DAS</a></td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/UserCases/#31-lembrete">US05</a><br><a href="../../Modelagem/Lexicos/#l09-emitir">L09</a><br> <a href="../../Modelagem/Lexicos/#l07-das">L07</a><br> <a href="../../Modelagem/CasosdeUso/#uc04-lembrete">UC04</a></td>
+<td align="center">🔴</td>
+<td align="center"><a href="../ForwardFrom/#bs03">BS03</a></td>
+</tr>
+<tr>
+<td align="center">RF04</td>
+<td align="center">O aplicativo deve <a href="../../Modelagem/Lexicos/#l10-exibir">mostrar</a> de forma clara se uma ação foi realizada com sucesso ou não</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/UserCases/#32-aviso">US06</a><br><a href="../../Modelagem/Lexicos/#l09-emitir">L09</a><br> <a href="../../Modelagem/Lexicos/#l10-exibir">L10</a></td>
+<td align="center">🟡</td>
+<td align="center"><a href="../ForwardFrom/#bs06">BS06</a></td>
+</tr>
+<tr>
+<td align="center">RF05</td>
+<td align="center">O aplicativo deve fornecer suporte para os <a href="../../Modelagem/Lexicos/#l17-usuario">usuários</a></td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/UserCases/#41-chat">US11</a><br><a href="../../Modelagem/Cenarios/#cenarios_1">C02</a><br> <a href="../../Modelagem/Lexicos/#l17-usuario">L17</a><br> <a href="../../Modelagem/CasosdeUso/#uc03-acesso-a-suporte">UC03</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs07">BS07</a></td>
+</tr>
+<tr>
+<td align="center">RF06</td>
+<td align="center">O aplicativo deve realizar o <a href="../../Modelagem/Lexicos/#l01-acessar">login</a> em mais de uma <a href="../../Modelagem/Lexicos/#l05-conta">conta</a></td>
+<td align="center">Entrevista</td>
+<td align="center"><a href="../../Modelagem/UserCases/#21-login">US03</a><br><a href="../../Modelagem/Lexicos/#l01-acessar">L01</a><br> <a href="../../Modelagem/Lexicos/#l05-conta">L05</a><br> <a href="../../Modelagem/CasosdeUso/#uc01-fazer-login">UC01</a></td>
+<td align="center">🔴</td>
+<td align="center"><a href="../ForwardFrom/#ent05">ENT05</a></td>
+</tr>
+<tr>
+<td align="center">RF07</td>
+<td align="center">Deve ser possível realizar <a href="../../Modelagem/Lexicos/#l01-acessar">login</a> a partir de um <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a></td>
+<td align="center">Introspecção</td>
+<td align="center"><a href="../../Modelagem/UserCases/#21-login">US03</a><br><a href="../../Modelagem/Lexicos/#l01-acessar">L01</a><br> <a href="../../Modelagem/Lexicos/#l03-cnpj">L03</a><br> <a href="../../Modelagem/CasosdeUso/#uc01-fazer-login">UC01</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is01">IS01</a></td>
+</tr>
+<tr>
+<td align="center">RF08</td>
+<td align="center">Deve ser possível <a href="../../Modelagem/Lexicos/#l09-emitir">emitir</a> o <a href="../../Modelagem/Lexicos/#l07-das">DAS</a></td>
+<td align="center">Introspecção</td>
+<td align="center"><a href="../../Modelagem/UserCases/#51-emitir-boletos">US14</a><br><a href="../../Modelagem/Cenarios/#cenarios_1">C01</a><br> <a href="../../Modelagem/Lexicos/#l09-emitir">L09</a><br> <a href="../../Modelagem/Lexicos/#l07-das">L07</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is02">IS02</a></td>
+</tr>
+<tr>
+<td align="center">RF09</td>
+<td align="center">Deve ser possível <a href="../../Modelagem/Lexicos/#l04-consultar">Consultar</a> <a href="../../Modelagem/Lexicos/#l11-informacao">informações</a> do <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a></td>
+<td align="center">Introspecção</td>
+<td align="center"><a href="../../Modelagem/UserCases/#53-informacoes-cnpj">US16</a><br><a href="../../Modelagem/Cenarios/#cenarios_1">C06</a><br> <a href="../../Modelagem/Lexicos/#l04-consultar">L04</a><br><a href="../../Modelagem/Lexicos/#l11-informacao">L11</a><br><a href="../../Modelagem/Lexicos/#l03-cnpj">L03</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is03">IS03</a></td>
+</tr>
+<tr>
+<td align="center">RF10</td>
+<td align="center">Deve ser possível pedir <a href="../../Modelagem/Lexicos/#l15-restituir">restituição</a></td>
+<td align="center">Introspecção</td>
+<td align="center"><a href="../../Modelagem/UserCases/#52-solicitar-restituicao">US15</a><br><a href="../../Modelagem/Cenarios/#cenarios_1">C10</a><br> <a href="../../Modelagem/Lexicos/#l15-restituir">L15</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is04">IS04</a></td>
+</tr>
+<tr>
+<td align="center">RF11</td>
+<td align="center">Deve ser possível <a href="../../Modelagem/Lexicos/#l04-consultar">consultar</a> perguntas e respostas frequentes</td>
+<td align="center">Introspecção</td>
+<td align="center"><a href="../../Modelagem/UserCases/#43-faq">US13</a><br><a href="../../Modelagem/Cenarios/#cenarios_1">C02</a><br> <a href="../../Modelagem/Lexicos/#l04-consultar">L04</a><br> <a href="../../Modelagem/CasosdeUso/#uc03-acesso-a-suporte">UC03</a></td>
+<td align="center">🟡</td>
+<td align="center"><a href="../ForwardFrom/#is05">IS05</a></td>
+</tr>
+<tr>
+<td align="center">RNF01</td>
+<td align="center">O aplicativo deve obter dados dentro do próprio aplicativo</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#desempenho">SIG de Desempenho</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#performance">Performance</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs04">BS04</a></td>
+</tr>
+<tr>
+<td align="center">RNF02</td>
+<td align="center">O aplicativo deve solicitar autorização para pegar dados de outros sites do governo</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#desempenho">SIG de Desempenho</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#confiabilidade">Confiabilidade</a></td>
+<td align="center">🔴</td>
+<td align="center"><a href="../ForwardFrom/#bs05">BS05</a></td>
+</tr>
+<tr>
+<td align="center">RNF03</td>
+<td align="center">O aplicativo deve ser possível de ser utilizado na maioria dos modelos de dispositivos</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#suportabilidade">SIG de Suportabilidade</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#suportabilidade">Suportabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs08">BS08</a></td>
+</tr>
+<tr>
+<td align="center">RNF04</td>
+<td align="center">O aplicativo deve validar a <a href="../../Modelagem/Lexicos/#l17-usuario">pessoa</a> que está utilizando o <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a></td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#confiabilidade">SIG de Confiabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs09">BS09</a></td>
+</tr>
+<tr>
+<td align="center">RNF05</td>
+<td align="center">O aplicativo deve ser possível de ser utilizado na maioria dos modelos de SO</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#suportabilidade">SIG de Suportabilidade</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#suportabilidade">Suportabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs010">BS10</a></td>
+</tr>
+<tr>
+<td align="center">RNF06</td>
+<td align="center">O aplicativo deve ser acessível para <a href="../../Modelagem/Lexicos/#l17-usuario">usuário</a> com algum tipo de deficiência</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#usabilidade">SIG de Usabilidade</a><br> <a href="../../Modelagem/EspecificacaoSuplementar/#usabilidade">Usabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs011">BS11</a></td>
+</tr>
+<tr>
+<td align="center">RNF07</td>
+<td align="center">O aplicativo deve conter texto que seja de fácil entendimento</td>
+<td align="center">Brainstorm</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#usabilidade">SIG de Usabilidade</a><br> <a href="../../Modelagem/EspecificacaoSuplementar/#usabilidade">Usabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#bs012">BS12</a></td>
+</tr>
+<tr>
+<td align="center">RNF08</td>
+<td align="center">O aplicativo deve solicitar o <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a> apenas uma vez</td>
+<td align="center">Entrevista</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#confiabilidade">SIG de Confiabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#ent01">ENT01</a></td>
+</tr>
+<tr>
+<td align="center">RNF09</td>
+<td align="center">O aplicativo deve ir até o final da operação antes de realizar qualquer outra etapa</td>
+<td align="center">Entrevista</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#desempenho">SIG de Desempenho</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#ent02">ENT02</a></td>
+</tr>
+<tr>
+<td align="center">RNF10</td>
+<td align="center">O aplicativo deve evitar os erros e telas brancas através do uso</td>
+<td align="center">Entrevista</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#usabilidade">SIG de Usabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#ent03">ENT03</a></td>
+</tr>
+<tr>
+<td align="center">RNF11</td>
+<td align="center">O aplicativo deve salvar as <a href="../../Modelagem/Lexicos/#l11-informacao">informações</a></td>
+<td align="center">Entrevista</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#desempenho">SIG de Desempenho</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#performance">Performance</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#ent04">ENT04</a></td>
+</tr>
+<tr>
+<td align="center">RNF12</td>
+<td align="center">O aplicativo deve ser suportado pelos principais sistemas mobile</td>
+<td align="center">Instrospecção</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#suportabilidade">SIG de Suportabilidade</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#suportabilidade">Suportabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is06">IS06</a></td>
+</tr>
+<tr>
+<td align="center">RNF13</td>
+<td align="center">Deve se exigir um <a href="../../Modelagem/Lexicos/#l03-cnpj">CNPJ</a> para acesso do aplicativo</td>
+<td align="center">Instrospecção</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#confiabilidade">SIG de Confiabilidade</a><br> <a href="../../Modelagem/EspecificacaoSuplementar/#usabilidade">Usabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is07">IS07</a></td>
+</tr>
+<tr>
+<td align="center">RNF14</td>
+<td align="center">O aplicativo deve ser de fácil entendimento e uso por seus <a href="../../Modelagem/Lexicos/#l17-usuario">usuários</a></td>
+<td align="center">Instrospecção</td>
+<td align="center"><a href="../../Modelagem/NFRFramework/#usabilidade">SIG de Usabilidade</a><br><a href="../../Modelagem/EspecificacaoSuplementar/#usabilidade">Usabilidade</a></td>
+<td align="center">🟢</td>
+<td align="center"><a href="../ForwardFrom/#is08">IS08</a></td>
 </tr>
 </tbody>
 </table>
