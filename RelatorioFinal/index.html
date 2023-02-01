@@ -1,0 +1,4420 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Post Mortem - MEI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="yellow" data-md-color-accent="yellow">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#post-mortem" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="MEI" class="md-header__button md-logo" aria-label="MEI" data-md-component="logo">
+      
+  <img src="../assets/images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MEI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Post Mortem
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="yellow" data-md-color-accent="yellow"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Requisitos-de-Software/2022.2-MEI" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    2022.2-MEI
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        Planejamento
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Reunioes/" class="md-tabs__link">
+        Apresentações/Reuniões
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Elicitacao/" class="md-tabs__link">
+        Elicitação
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Modelagem/Cenarios/" class="md-tabs__link">
+        Modelagem
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Analise/" class="md-tabs__link">
+        Análise
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Pos-Rastreabilidade/" class="md-tabs__link">
+        Pós-Rastreabilidade
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Post Mortem
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MEI" class="md-nav__button md-logo" aria-label="MEI" data-md-component="logo">
+      
+  <img src="../assets/images/favicon.png" alt="logo">
+
+    </a>
+    MEI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Requisitos-de-Software/2022.2-MEI" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    2022.2-MEI
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="..">Planejamento</a>
+          
+            <label for="__nav_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Planejamento" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Planejamento
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/AplicativosAnalisados/" class="md-nav__link">
+        Aplicativos Analisados
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/MEI/" class="md-nav__link">
+        Aplicativo Escolhido
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/Metodologia/" class="md-nav__link">
+        Metodologias e Processos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/Ferramentas/" class="md-nav__link">
+        Ferramentas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/Heatmap/" class="md-nav__link">
+        Heatmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Planejamento/Roadmap/" class="md-nav__link">
+        Roadmap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          Políticas
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Políticas" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          Políticas
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/CodigoDeConduta/" class="md-nav__link">
+        Código de Conduta Para Colaboradores
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDeContribuicao/" class="md-nav__link">
+        Política de Contribuição
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDeIssue/" class="md-nav__link">
+        Política de Issue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDeBranch/" class="md-nav__link">
+        Política de Branch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDeCommit/" class="md-nav__link">
+        Política de Commit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDePR/" class="md-nav__link">
+        Política de Pull Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Politicas/PolitcaDeSeguranca/" class="md-nav__link">
+        Política de Segurança
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/Cronogramas/" class="md-nav__link">
+        Cronograma de Elicitação/Priorização
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/ModeloTermoConsentimento/" class="md-nav__link">
+        Termo de consentimento
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Reunioes/">Apresentações/Reuniões</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Apresentações/Reuniões" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Apresentações/Reuniões
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Apresentações
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Apresentações" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Apresentações
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega1/" class="md-nav__link">
+        1º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega2/" class="md-nav__link">
+        2º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega3/" class="md-nav__link">
+        3º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega4/" class="md-nav__link">
+        4º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega5/" class="md-nav__link">
+        5º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega6/" class="md-nav__link">
+        6º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Apresentacoes/Entrega7/" class="md-nav__link">
+        7º Ponto de Controle
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Reuniões
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reuniões" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Reuniões
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao1/" class="md-nav__link">
+        1ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao2/" class="md-nav__link">
+        2ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao3/" class="md-nav__link">
+        3ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao4/" class="md-nav__link">
+        4ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao5/" class="md-nav__link">
+        5ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao6/" class="md-nav__link">
+        6ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reunioes/Atas/Reuniao7/" class="md-nav__link">
+        7ª Reunião
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Elicitacao/">Elicitação</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Elicitação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Elicitação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/Brainstorming/" class="md-nav__link">
+        Brainstorming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/Entrevista/" class="md-nav__link">
+        Entrevista
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/Introspeccao/" class="md-nav__link">
+        Introspecção
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/perfil/" class="md-nav__link">
+        Perfil de Usuário
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/personas/" class="md-nav__link">
+        Persona
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Elicitacao/tecnicas-priorizacao/" class="md-nav__link">
+        Priorização
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Modelagem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modelagem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Modelagem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/Cenarios/" class="md-nav__link">
+        Cenários
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/Lexicos/" class="md-nav__link">
+        Léxicos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/CasosdeUso/" class="md-nav__link">
+        Casos de Uso
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/EspecificacaoSuplementar/" class="md-nav__link">
+        Especificação Suplementar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/NFRFramework/" class="md-nav__link">
+        NFR Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Modelo Ágil
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modelo Ágil" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Modelo Ágil
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/UserCases/" class="md-nav__link">
+        Histórias de Usuário
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modelagem/Agil/BacklogDoProduto/" class="md-nav__link">
+        Backlog
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Analise/">Análise</a>
+          
+            <label for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Análise" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Análise
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Identifica%C3%A7%C3%A3oDePartes/" class="md-nav__link">
+        Identificação De Partes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Analise/Verificacao/">Verificação</a>
+          
+            <label for="__nav_5_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Verificação" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Verificação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3_2" type="checkbox" id="__nav_5_3_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3_2">
+          Planejamento
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Planejamento" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Planejamento
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Planejamento/VerificacaoRichPicture/" class="md-nav__link">
+        Rich Picture
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Planejamento/verificacaoAplicativoEscolhido/" class="md-nav__link">
+        Aplicativo Escolhido
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Planejamento/verificacaoTermoConsentimento/" class="md-nav__link">
+        Termo de Consentimento
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3_3" type="checkbox" id="__nav_5_3_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3_3">
+          Elicitação
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Elicitação" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Elicitação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/Verifica%C3%A7%C3%A3oBrainstorming/" class="md-nav__link">
+        Brainstoming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/VerificacaoEntrevista/" class="md-nav__link">
+        Entrevista
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/VerificacaoInstropeccao/" class="md-nav__link">
+        Introspecção
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/VerificacaoPerfilUsuario/" class="md-nav__link">
+        Perfil de Usuário
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/VerificacaoPersonas/" class="md-nav__link">
+        Personas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Elicitacao/VerificacaoPriorizacao/" class="md-nav__link">
+        Priorização
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3_4" type="checkbox" id="__nav_5_3_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3_4">
+          Modelagem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modelagem" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Modelagem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/VerificacaoCenarios/" class="md-nav__link">
+        Cenários
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/VerificacaoLexicos/" class="md-nav__link">
+        Léxicos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/verificacaoCasosdeUso/" class="md-nav__link">
+        Casos de Uso
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/VerificacaoEspecifacao/" class="md-nav__link">
+        Especificação Suplementar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/verificacaoNFRFramework/" class="md-nav__link">
+        NFR Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Verificacao/Modelagem/verificacaoBacklog/" class="md-nav__link">
+        Backlog
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Analise/Validacao/">Validação</a>
+          
+            <label for="__nav_5_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Validação" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Validação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Validacao/Informal/" class="md-nav__link">
+        Validação Informal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Validacao/protAlta/" class="md-nav__link">
+        Prototipagem
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5" type="checkbox" id="__nav_5_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_5">
+          Linkedin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linkedin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          Linkedin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5_1" type="checkbox" id="__nav_5_5_1" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Analise/Linkedin/Verificacao/">Verificação</a>
+          
+            <label for="__nav_5_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Verificação" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          Verificação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoRichPicture/" class="md-nav__link">
+        Rich Picture
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoPersonas/" class="md-nav__link">
+        Personas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoBacklog/" class="md-nav__link">
+        Backlog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/Verifica%C3%A7%C3%A3oCasosDeUso/" class="md-nav__link">
+        Casos de uso
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoCenarios/" class="md-nav__link">
+        Cenários
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoNFR/" class="md-nav__link">
+        NFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/Verifica%C3%A7%C3%A3oUserHistories/" class="md-nav__link">
+        User Stories
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoEspecificacaoSuplementar/" class="md-nav__link">
+        Especificação Suplementar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoLexicos/" class="md-nav__link">
+        Lexicos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoPlanejamento/" class="md-nav__link">
+        Planejamento
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoTecnicasElicitacao/" class="md-nav__link">
+        Tecnicas de Elicitação
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Verificacao/VerificacaoTecnicasPriorizacao/" class="md-nav__link">
+        Tecnicas de Priorização
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5_2" type="checkbox" id="__nav_5_5_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Analise/Linkedin/Validacao/">Validação</a>
+          
+            <label for="__nav_5_5_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Validação" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Validação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Analise/Linkedin/Validacao/informal/" class="md-nav__link">
+        Validação Informal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../Pos-Rastreabilidade/">Pós-Rastreabilidade</a>
+          
+            <label for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Pós-Rastreabilidade" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Pós-Rastreabilidade
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pos-Rastreabilidade/BackwardFrom/" class="md-nav__link">
+        Backward-from
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pos-Rastreabilidade/ForwardFrom/" class="md-nav__link">
+        Forward-from
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pos-Rastreabilidade/MatrizGeral/" class="md-nav__link">
+        Matriz Geral
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Post Mortem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Post Mortem
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Indice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Indice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versao" class="md-nav__link">
+    Histórico de Versão
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    Objetivo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mei" class="md-nav__link">
+    MEI
+  </a>
+  
+    <nav class="md-nav" aria-label="MEI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sobre-o-mei" class="md-nav__link">
+    Sobre o MEI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-o-mei" class="md-nav__link">
+    Por quê o MEI?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planejamento" class="md-nav__link">
+    Planejamento
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execucao" class="md-nav__link">
+    Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-etapa" class="md-nav__link">
+    1ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2a-etapa" class="md-nav__link">
+    2ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3a-etapa" class="md-nav__link">
+    3ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4a-etapa" class="md-nav__link">
+    4ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5a-etapa" class="md-nav__link">
+    5ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6a-etapa" class="md-nav__link">
+    6ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7a-etapa" class="md-nav__link">
+    7ª Etapa
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ferramentas" class="md-nav__link">
+    Ferramentas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tecnicas" class="md-nav__link">
+    Técnicas
+  </a>
+  
+    <nav class="md-nav" aria-label="Técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planejamento_1" class="md-nav__link">
+    Planejamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao" class="md-nav__link">
+    Elicitação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelagem" class="md-nav__link">
+     Modelagem 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Modelagem ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cenarios" class="md-nav__link">
+    Cenários
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lexicos" class="md-nav__link">
+    Léxicos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-uso" class="md-nav__link">
+    Casos de Uso
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#especificacao-suplementar" class="md-nav__link">
+    Especificação Suplementar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-framework" class="md-nav__link">
+    NFR Framework
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#historias-de-usuariso" class="md-nav__link">
+    Histórias de Usuáriso
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backlog" class="md-nav__link">
+    Backlog
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pos-rastreabilidade" class="md-nav__link">
+    Pós-Rastreabilidade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#artefatos" class="md-nav__link">
+    Artefatos
+  </a>
+  
+    <nav class="md-nav" aria-label="Artefatos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-planejamento" class="md-nav__link">
+    Etapa 1: Planejamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-elicitacao" class="md-nav__link">
+    Etapa 2: Elicitação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapas-3-e-4-modelagem" class="md-nav__link">
+    Etapas 3 e 4: Modelagem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-6-pos-rastreabilidade" class="md-nav__link">
+    Etapa 6: Pós-Rastreabilidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contagem-individual" class="md-nav__link">
+    Contagem Individual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comentarios" class="md-nav__link">
+    Comentários
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultados" class="md-nav__link">
+    Resultados
+  </a>
+  
+    <nav class="md-nav" aria-label="Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfil-do-usuario" class="md-nav__link">
+    Perfil do Usuário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requisitos" class="md-nav__link">
+    Requisitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prototipo-de-alta-fidelidade" class="md-nav__link">
+    Protótipo de Alta Fidelidade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vv" class="md-nav__link">
+    V&amp;V
+  </a>
+  
+    <nav class="md-nav" aria-label="V&amp;V">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verificacao" class="md-nav__link">
+    Verificação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacao" class="md-nav__link">
+    Validação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    BIbliografia
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Indice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Indice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versao" class="md-nav__link">
+    Histórico de Versão
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    Objetivo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mei" class="md-nav__link">
+    MEI
+  </a>
+  
+    <nav class="md-nav" aria-label="MEI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sobre-o-mei" class="md-nav__link">
+    Sobre o MEI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-o-mei" class="md-nav__link">
+    Por quê o MEI?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planejamento" class="md-nav__link">
+    Planejamento
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execucao" class="md-nav__link">
+    Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-etapa" class="md-nav__link">
+    1ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2a-etapa" class="md-nav__link">
+    2ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3a-etapa" class="md-nav__link">
+    3ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4a-etapa" class="md-nav__link">
+    4ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5a-etapa" class="md-nav__link">
+    5ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6a-etapa" class="md-nav__link">
+    6ª Etapa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7a-etapa" class="md-nav__link">
+    7ª Etapa
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ferramentas" class="md-nav__link">
+    Ferramentas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tecnicas" class="md-nav__link">
+    Técnicas
+  </a>
+  
+    <nav class="md-nav" aria-label="Técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planejamento_1" class="md-nav__link">
+    Planejamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao" class="md-nav__link">
+    Elicitação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelagem" class="md-nav__link">
+     Modelagem 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Modelagem ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cenarios" class="md-nav__link">
+    Cenários
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lexicos" class="md-nav__link">
+    Léxicos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-uso" class="md-nav__link">
+    Casos de Uso
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#especificacao-suplementar" class="md-nav__link">
+    Especificação Suplementar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-framework" class="md-nav__link">
+    NFR Framework
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#historias-de-usuariso" class="md-nav__link">
+    Histórias de Usuáriso
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backlog" class="md-nav__link">
+    Backlog
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pos-rastreabilidade" class="md-nav__link">
+    Pós-Rastreabilidade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#artefatos" class="md-nav__link">
+    Artefatos
+  </a>
+  
+    <nav class="md-nav" aria-label="Artefatos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-planejamento" class="md-nav__link">
+    Etapa 1: Planejamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-elicitacao" class="md-nav__link">
+    Etapa 2: Elicitação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapas-3-e-4-modelagem" class="md-nav__link">
+    Etapas 3 e 4: Modelagem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-6-pos-rastreabilidade" class="md-nav__link">
+    Etapa 6: Pós-Rastreabilidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contagem-individual" class="md-nav__link">
+    Contagem Individual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comentarios" class="md-nav__link">
+    Comentários
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultados" class="md-nav__link">
+    Resultados
+  </a>
+  
+    <nav class="md-nav" aria-label="Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfil-do-usuario" class="md-nav__link">
+    Perfil do Usuário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requisitos" class="md-nav__link">
+    Requisitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prototipo-de-alta-fidelidade" class="md-nav__link">
+    Protótipo de Alta Fidelidade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vv" class="md-nav__link">
+    V&amp;V
+  </a>
+  
+    <nav class="md-nav" aria-label="V&amp;V">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verificacao" class="md-nav__link">
+    Verificação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacao" class="md-nav__link">
+    Validação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bibliografia" class="md-nav__link">
+    BIbliografia
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/Requisitos-de-Software/2022.2-MEI/edit/master/docs/RelatorioFinal/index.md" title="Editar esta página" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="post-mortem">Post Mortem</h1>
+<h2 id="historico-de-versao"><a>Histórico de Versão</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">Data de Realização</th>
+<th align="center">Data Prevista de Revisão</th>
+<th align="center">Versão</th>
+<th align="center">Descrição</th>
+<th align="center">Autor</th>
+<th align="center">Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">27/01/2023</td>
+<td align="center">28/01/2023</td>
+<td align="center">1.0</td>
+<td align="center">Criação do Documento</td>
+<td align="center"><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td align="center"><a href="https://github.com/Thiab394">Thiago Olivera</a></td>
+</tr>
+<tr>
+<td align="center">29/01/2023</td>
+<td align="center">30/01/2023</td>
+<td align="center">1.1</td>
+<td align="center">Finaliza Artefatos, Resultados e V&amp;V</td>
+<td align="center"><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td align="center"><a href="https://github.com/Thiab394">Thiago Olivera</a></td>
+</tr>
+<tr>
+<td align="center">31/01/2023</td>
+<td align="center">01/02/2023</td>
+<td align="center">1.2</td>
+<td align="center">Adição da Seção Planejamento</td>
+<td align="center"><a href="https://github.com/Thiab394">Thiago Olivera</a></td>
+<td align="center"><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+</tr>
+<tr>
+<td align="center">31/01/2023</td>
+<td align="center">01/02/2023</td>
+<td align="center">1.3</td>
+<td align="center">Adição da Seção Mei e Técnicas</td>
+<td align="center"><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td align="center"><a href="https://github.com/edudsan">Eduardo</a></td>
+</tr>
+<tr>
+<td align="center">31/01/2023</td>
+<td align="center">01/02/2023</td>
+<td align="center">1.4</td>
+<td align="center">Adição da Execução e das ferramentas</td>
+<td align="center"><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td align="center"><a href="https://github.com/-"></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="introducao"><a>Introdução</a></h2>
+<p>O presente documento visa reunir os materiais requisitados pelo professor André Barros de Sales, da disciplina Requisitos de Software da Universidade de Brasília, para a realização da apresentação final. O conteúdo presente abaixo aborda os seguintes tópicos detalhadamente:</p>
+<ul>
+<li>O <strong>aplicativo</strong> selecionado;</li>
+<li><strong>Planejamento</strong> de recursos e entregas;</li>
+<li><strong>Execução</strong> do projeto;</li>
+<li><strong>Resultados</strong> alcançados;</li>
+<li>Tabelas sintetizando as <strong>técnicas</strong> utilizadas, <strong>artefatos</strong> criados, métodos de <strong>verificação e validação</strong>, <strong>ferramentas</strong> e seu uso, vídeos das <strong>apresentações</strong>;</li>
+<li>Facilidades e dificuldades.</li>
+</ul>
+<p>Vale destacar que o documento foi elaborado seguindo o template utilizado pelo projeto do YouTube [1], realizado no semestre 2022.1.</p>
+<h2 id="objetivo"><a>Objetivo</a></h2>
+<p>A disciplina de requisitos de software possui o objetivo de ensinar os alunos sobre requisitos, desde o seu processo de elicitação até técnicas de como priorizá-los, junto ao planejamento de um projeto. O projeto foi desenvolvido com a finalidade de aprender de forma prática sobre os tópicos da ementa da disciplina. Para isso foi escolhido um aplicativo onde o grupo poderia aplicar as técnicas que nos foram apresentadas no decorrer da dsiciplina.</p>
+<h2 id="mei"><a>MEI</a></h2>
+<h3 id="sobre-o-mei"><a>Sobre o MEI</a></h3>
+<p>Microempreendedor Individual ou mais conhecido como MEI, é um aplicativo ligado ao Portal do Empreendedor. O aplicativo fornece vários auxílios para quem deseja formalizar algum trabalho a fim de obter, por exemplo, uma aposentadoria. O aplicativo lista algumas funções, são as principais:</p>
+<ul>
+<li>Gerar guia de pagamento do DAS;</li>
+<li>Status do CNPJ;</li>
+<li>Solicitar Restituição;</li>
+<li>Fornecer ajuda aos usuários.</li>
+</ul>
+<p>Todos esses pontos estão presentes e foram trabalhos ao longo do projeto.</p>
+<h3 id="por-que-o-mei"><a>Por quê o MEI?</a></h3>
+<p>Antes de entender a razão da escolha do MEI vale citar que foram analisados 6 <a href="../Planejamento/AplicativosAnalisados/">aplicativos</a>. Nessa análise, foram elaborados Rich Pictures e houve uma reunião para análise dos problemas encontrados em cada aplicativo. Por fim, depois de muitas análises foi possível levantar dados maiores sobre o MEI e entender que seria o melhor aplicativo para nosso projeto, existe um documento explicando mais sobre o <a href="../Planejamento/MEI/">MEI</a>.</p>
+<h2 id="planejamento"><a>Planejamento</a></h2>
+<p>Esta seção tem como objetivo relatar o planejamento feito ao decorrer da disciplina, que consiste basicamente nos documentos realizadas como um meio de "preparação" para o bom desenvolvimento do projeto. </p>
+<p>Em tal etapa temos diversos documentos, tais como aplicativos analisados, aplicativo escolhido, Ferramentas, etc, que estão listados e podem ser visualizados na seção de <a href="#etapa 1: planejamento">Artefatos - Etapa 1</a>, porém aqui será mostrado apenas o cronograma planejado do projeto, que seria a essência do planejamento do mesmo, por possuir em detalhes a realização de cada artefate e de cada "Sub-artefato" ou até documentos e etapas auxiliares para que seja realizada uma boa execução.</p>
+<p>O Cronograma Planejado pode ser visto <a href="../Planejamento/Roadmap/#cronograma-planejado">aqui</a>, porém também será listado logo abaixo, nas Tabelas de 1-6 Relacionadas ás etapas 1-6 respectivamente:</p>
+<p><center></p>
+<p><strong>Etapa 1</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listar apps avaliados</td>
+<td>Ana e Pedro</td>
+<td>28/10/2022</td>
+<td>01/11/2022</td>
+<td>02/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Discorrer sobre o app selecionado</td>
+<td>Ana e Pedro</td>
+<td>01/11/2022</td>
+<td>19/11/2022</td>
+<td>20/11/2022</td>
+<td>Pedro</td>
+</tr>
+<tr>
+<td>Ferramentas do projeto</td>
+<td>Arthur, Eduardo e Thiago</td>
+<td>12/11/2022</td>
+<td>19/11/2022</td>
+<td>20/11/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Adicionar Rich Pictures</td>
+<td>Ana, Arthur, Pedro, João, Thiago, Eduardo</td>
+<td>12/11/2022</td>
+<td>19/11/2022</td>
+<td>20/11/2022</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Refazer Rich Picture do app selecionado</td>
+<td>João</td>
+<td>19/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Cronograma de atividades</td>
+<td>Arthur e Thiago</td>
+<td>16/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>Eduardo</td>
+</tr>
+<tr>
+<td>Heatmap</td>
+<td>Eduardo</td>
+<td>16/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Metodologias</td>
+<td>Arthur e Thiago</td>
+<td>16/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Equipe</td>
+<td>Thiago</td>
+<td>16/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Atas</td>
+<td>Arthur</td>
+<td>16/11/2022</td>
+<td>23/11/2022</td>
+<td>24/11/2022</td>
+<td>Ana</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 1 - Tarefas para a Etapa 1</em><br><br></p>
+<p><strong>Etapa 2</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traçar perfil de usuários</td>
+<td>Eduardo, João e Pedro</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João, Ana</td>
+</tr>
+<tr>
+<td>Personas</td>
+<td>Pedro</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Perfil - Questionário</td>
+<td>Eduardo</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Elicitação - Introspecção</td>
+<td>Arthur</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Elicitação - Entrevista</td>
+<td>Arthur</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Elicitação - Brainstorm</td>
+<td>Pedro</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Priorização - MoSCoW</td>
+<td>Ana</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Priorização - First Things First</td>
+<td>Ana</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Priorização - Three-Level Scale</td>
+<td>Ana</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Cronograma para elicitação de requisitos</td>
+<td>Thiago</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Cronograma para priorização de requisitos</td>
+<td>Thiago</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Gravação de priorização - Three-Level Scale</td>
+<td>Ana</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Eduardo</td>
+</tr>
+<tr>
+<td>Gravação de priorização - Moscow</td>
+<td>Pedro</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Gravação de elicitação - entrevista</td>
+<td>Pedro</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>Eduardo</td>
+</tr>
+<tr>
+<td>Gravação de elicitação - introspecção</td>
+<td>Arthur</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Gravação de elicitação e priorização - brainstorm</td>
+<td>Pedro, Arthur, Thiago, Eduardo</td>
+<td>23/11/2022</td>
+<td>29/11/2022</td>
+<td>30/11/2022</td>
+<td>João</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 2 - Tarefas para a Etapa 2</em><br><br></p>
+<p><strong>Etapa 3</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cenários - especificações</td>
+<td>João, Eduardo</td>
+<td>30/11/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Cenários - criação</td>
+<td>João, Eduardo</td>
+<td>30/11/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Léxicos - especificações</td>
+<td>Ana</td>
+<td>30/11/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Pedro</td>
+</tr>
+<tr>
+<td>Léxicos - definições</td>
+<td>Ana</td>
+<td>30/11/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Pedro</td>
+</tr>
+<tr>
+<td>Casos de Uso - especificação</td>
+<td>Pedro, Thiago</td>
+<td>02/12/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Casos de Uso - atores</td>
+<td>Pedro, Thiago</td>
+<td>02/12/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Casos de Uso - diagrama</td>
+<td>Pedro, Thiago</td>
+<td>02/12/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Especificação suplementar</td>
+<td>Eduarto, Arthur</td>
+<td>02/12/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Modelo FURPS+</td>
+<td>Eduardo</td>
+<td>02/12/2022</td>
+<td>11/12/2022</td>
+<td>12/12/2022</td>
+<td>Arthur</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 3 - Tarefas para a Etapa 3</em><br><br></p>
+<p><strong>Etapa 4</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Histórias de usuário</td>
+<td>Eduardo</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Histórias de usuário - contato com usuário/persona</td>
+<td>Pedro</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Histórias de usuário - critérios de aceitação</td>
+<td>Arthur</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Backlogs - épicos</td>
+<td>Thiago</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Backlogs - temas</td>
+<td>Thiago</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>NFR Framework</td>
+<td>Ana</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Eduardo</td>
+</tr>
+<tr>
+<td>Softgoals</td>
+<td>Arthur</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Impactos</td>
+<td>João</td>
+<td>13/12/2022</td>
+<td>03/01/2023</td>
+<td>04/01/2023</td>
+<td>Thiago</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 4 - Tarefas para a Etapa 4</em><br><br></p>
+<p><strong>Etapa 5</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verificação de requisitos</td>
+<td>Ana, Pedro, Thiago</td>
+<td>05/01/2023</td>
+<td>10/01/2023</td>
+<td>11/01/2023</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Validação de requisitos</td>
+<td>João, Arthur, Eduardo</td>
+<td>05/01/2023</td>
+<td>10/01/2023</td>
+<td>11/01/2023</td>
+<td>Thiago</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 5 - Tarefas para a Etapa 5</em><br><br></p>
+<p><strong>Etapa 6</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Responsáveis</th>
+<th>Início</th>
+<th>Fim</th>
+<th>Revisão</th>
+<th>Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pós-rastreabilidade</td>
+<td>Pedro, Thiago</td>
+<td>11/01/2023</td>
+<td>15/01/2023</td>
+<td>16/01/2023</td>
+<td>João</td>
+</tr>
+<tr>
+<td>Backward From</td>
+<td>Ana, Arthur</td>
+<td>11/01/2023</td>
+<td>15/01/2023</td>
+<td>16/01/2023</td>
+<td>Thiago</td>
+</tr>
+<tr>
+<td>Forward From</td>
+<td>João, Eduardo</td>
+<td>11/01/2023</td>
+<td>15/01/2023</td>
+<td>16/01/2023</td>
+<td>Ana</td>
+</tr>
+<tr>
+<td>Planejamento de verificação de artefatos</td>
+<td>Ana, Pedro</td>
+<td>15/01/2023</td>
+<td>18/01/2023</td>
+<td>19/01/2023</td>
+<td>Arthur</td>
+</tr>
+<tr>
+<td>Relatos da verificação de artefatos</td>
+<td>João, Thiago</td>
+<td>15/01/2023</td>
+<td>18/01/2023</td>
+<td>19/01/2023</td>
+<td>Eduardo</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 6 - Tarefas para a Etapa 6</em><br><br></p>
+<p></center></p>
+<h2 id="execucao"><a>Execução</a></h2>
+<p>Durante a execução do projeto a equipe tentou realizar o mais fielmente possível o cronograma Planejado, porem infelizmente não foi possível seguir a risca tal cronograma como pode ser visto no <a href="../Planejamento/Roadmap/#cronograma-realizado">Cronograma Realizado</a>, portanto na tabela a seguir está apresentado as 7 fases do nosso projeto, cada uma delas com sua respectiva descrição. </p>
+<h3 id="1a-etapa"><a>1ª Etapa</a></h3>
+<p>A primeira etapa do projeto se caracteriza principalmente pela formação da equipe e escolha do aplicativo, durante a primeira etapa do projeto pode se dizer que ela ira definir o projeto inteiro, por isso a sua importância, além disso, pode se dar destaque a alguns artefatos muito importante para o andamento do projeto, tais como o <a href="../Planejamento/Roadmap/">Roadmap</a> , as <a href="../Planejamento/Ferramentas/">Ferramentas Utilizadas</a> e os <a href="../Planejamento/AplicativosAnalisados/#mei">Rich Pictures</a>.</p>
+<h3 id="2a-etapa"><a>2ª Etapa</a></h3>
+<p>A segunda etapa do projeto é caracterizada pela elicitação, nessa etapa a equipe tinha como objetivo listar técnicas de <a href="../Elicitacao/tecnicas-priorizacao/">priorização</a> e <a href="../Elicitacao/">elicitação</a> as quais seriam utilizadas no projeto, além de definir alguns artefatos muito importantes para o andamento do projeto tais como o <a href="../Elicitacao/perfil/">Perfil de Usuário</a> e o elenco de <a href="../Elicitacao/personas/">Personas</a>.</p>
+<h3 id="3a-etapa"><a>3ª Etapa</a></h3>
+<p>Na terceira etapa do projeto o objetivo principal da equipe era aprender e aplicar técnicas de Modelagem de Requisitos, portanto nesse etapa do projeto os artefatos desenvolvidos foram <a href="../Modelagem/Cenarios/">Cenários</a> , <a href="../Modelagem/Lexicos/">Léxico</a>, <a href="../Modelagem/CasosdeUso/">Use Cases</a> e <a href="../Modelagem/EspecificacaoSuplementar/">Especificação Suplementar</a>.</p>
+<h3 id="4a-etapa"><a>4ª Etapa</a></h3>
+<p>Devido à complexidade da modelagem de requisitos a quarta etapa apresenta como principal característica ser uma continuação da terceira etapa, portanto com intuito de complementar a Modelagem inicial de requisitos aplicando principalmente os estudos realizados sobre o modelo ágil tais como o Scrum, foram confeccionados os seguintes artefatos <a href="../Modelagem/UserCases/">Histórias de Usuário</a>, <a href="../Modelagem/Agil/BacklogDoProduto/">Backlogs</a>, <a href="../Modelagem/NFRFramework/">NFR Framework</a>.</p>
+<h3 id="5a-etapa"><a>5ª Etapa</a></h3>
+<p>Na quinta etapa somos apresentados aos estudos de verificação e validação, para a melhora da qualidade individual de cada artefato, com o princípio fundamentalmente didático fomos introduzidos a análise, por meio de uma análise externa, portanto nesta primeira etapa de análise outro grupo realizou a análise do projeto em quanto o nosso grupo realizou a análise do grupo <a href="../Analise/Linkedin/Verificacao/">Linkedin</a>.</p>
+<h3 id="6a-etapa"><a>6ª Etapa</a></h3>
+<p>E então na sexta etapa realizamos uma autoanalise e <a href="../Analise/Verificacao/">verificamos</a> grande parte dos artefatos do projeto por meio da inspeção e <a href="../Analise/Validacao/">validamos</a> os artefatos confeccionados com os responsáveis do aplicativo, o qual no nosso caso é a receita federal e absorvemos todo o feedback dessa etapa, buscando corrigir os principais problemas encontrados nesta etapa.</p>
+<h3 id="7a-etapa"><a>7ª Etapa</a></h3>
+<p>E para finalizar com chave de ouro o projeto Criamos os artefatos relacionados a <a href="../Pos-Rastreabilidade/">Pós-Rastreabilidade</a> e entregamos o <a href="../Pos-Rastreabilidade/BackwardFrom/">Backward-from</a>, O <a href="../Pos-Rastreabilidade/ForwardFrom/">Forward-from</a> e a <a href="../Pos-Rastreabilidade/MatrizGeral/">Matriz Geral</a> do projeto, essa etapa visa principal rastrear os requisitos e suas conexões em todas as etapas do projeto além de que a rastreabilidade pode ser vista como um fator que auxilia a gerência da qualidade.</p>
+<p>E para representar melhor cada etapa da Execução do projeto foi realizada uma apresentação, com o grupo apresentando os principais artefatos de cada apresentação, esses videos podem ser encontrados a seguir:</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th align="center">Etapa</th>
+<th align="center">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/X7KntEqHTHc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">2ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/_BWSQ2Iqw3A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">3ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/AtD5gDehAso" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">4ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/qE5pZoyGdqc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">5ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/eplDRTPnimc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">6ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/LoSalKVe37k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+<tr>
+<td align="center">7ª</td>
+<td align="center"><iframe width="800" height="400" src="https://www.youtube-nocookie.com/embed/fA-5T-4jp_8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 7 - Lista das gravações realizadas</em>
+</center></p>
+<h2 id="ferramentas"><a>Ferramentas</a></h2>
+<p>Na tabela a seguir pode ser encontrada as ferramentas utilizadas durante o projeto e suas principais funções :
+<center></p>
+<table>
+<thead>
+<tr>
+<th align="center">Logo</th>
+<th align="center">Nome da ferramenta</th>
+<th align="center">Etapa</th>
+<th align="center">Utilidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/docs.svg" width="100" height="100"></img></td>
+<td align="center"><a>Google Docs</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Utilizado para fazer o planejamento e elaboração de diversos documentos relacionados ao projeto.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/chrome.svg" width="100" height="100"></img></td>
+<td align="center"><a>Google Chrome</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Um dos navegadores utilizados para avaliar os sites e ter acesso às diversas ferramentas.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/github.svg" width="100" height="100"></img></td>
+<td align="center"><a>GitHub</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Utilizado para trabalhar com o projeto da disciplina.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/microsoft-teams.svg" width="100" height="100"></img></td>
+<td align="center"><a>Microsoft Teams</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Local de trabalho, usado principalmente para as reuniões síncronas da equipe.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/youtube.svg" width="100" height="100"></img></td>
+<td align="center"><a>YouTube</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Utilizado para compartilhar apresentações e disponibilizar as reuniões para o professor.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/visual-studio-code.svg" width="100" height="100"></img></td>
+<td align="center"><a>Visual Studio Code</a></td>
+<td align="center">Todo o projeto</td>
+<td align="center">Ferramenta de programação, utilizada para montar o github pages.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/lucidchart.png" width="100" height="100"></img></td>
+<td align="center"><a>Lucid Chart</a></td>
+<td align="center">Modelagem</td>
+<td align="center">Ferramenta utilizada para construir alguns diagramas.</td>
+</tr>
+<tr>
+<td align="center"><img src="./../../assets/ferramentasLogo/figma.svg" width="100" height="100"></img></td>
+<td align="center"><a>Figma</a></td>
+<td align="center">Análise</td>
+<td align="center">Utilizado para trabalhar com protótipos de alta fidelidade.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 8 - Lista de ferramentas utilizadas</em>
+</center></p>
+<h2 id="tecnicas"><a>Técnicas</a></h2>
+<h3 id="planejamento_1"><a>Planejamento</a></h3>
+<p>Dentro do planejamento o grupo seguiu alguns passos para iniciarmos os trabalhos com relação ao MEI, a primeira etapa foi analisar alguns aplicativos e utilizar a técnica do "Rich Picture" para entender o sistema como um todo, depois de analisar todos Rich Pictures, o MEI foi escolhido. Tabém foi decidido a forma de ser trabalho, foi utilizado o sistema de Sprints, com <a href="https://requisitos-de-software.github.io/2022.2-MEI/Reunioes/">reuniões</a> de forma predominante no sábado.</p>
+<p>Nesse primeiro momento foi feito alguns documentos que auxiliam o trabalho, como por exemplo, <a href="https://requisitos-de-software.github.io/2022.2-MEI/Planejamento/Heatmap/">Heatmap</a>, <a href="https://requisitos-de-software.github.io/2022.2-MEI/Planejamento/Roadmap/">Roadmap</a> e <a href="https://requisitos-de-software.github.io/2022.2-MEI/Politicas/CodigoDeConduta/">Políticas de Trabalho</a>.</p>
+<p>Os participantes do Planejamento foram: Ana, Pedro, João Lucas, Thiago, Eduardo e Arthur</p>
+<h3 id="elicitacao"><a>Elicitação</a></h3>
+<p>O Grupo buscou algumas técnicas para elicitar os requisitos, o primeiro a ser trabalhado foi o questionário, porém não tivemos os resultados esperados para, portanto, não conseguimos utilizar esses dados e atrasamos em primeiro momento. Logo depois, conseguimos utilizar de forma correta 3 técnicas, sendo elas:</p>
+<ul>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Elicitacao/Brainstorming/">Brainstorming</a> - Os participantes dessa técnica foram: João Lucas, Eduardo, Thiago e Pedro</li>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Elicitacao/Entrevista/">Entrevista</a> - Os participante dessa técnica foi: Pedro</li>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Elicitacao/Introspeccao/">Introspecção</a> - Os participante dessa técnica foi: Arthur</li>
+</ul>
+<p>Com essas três técnicas, o grupo MEI conseguiu listar requisitos funcionais e não funcionais para serem trabalhados ao longo do projeto. Vale ressaltar a importância do trabalho com as <a href="https://requisitos-de-software.github.io/2022.2-MEI/Elicitacao/personas/">personas</a>.</p>
+<p>Os perfis de Usuário e as Personas foram elaborados por: Ana, Eduardo e Pedro.</p>
+<p>Um último passo da Elicitação, foi a Priorização. O Grupo utilizou algumas técnicas para <a href="https://requisitos-de-software.github.io/2022.2-MEI/Elicitacao/tecnicas-priorizacao/">priorizar</a>, podemos citar as 3:</p>
+<ul>
+<li>Moscow</li>
+<li>First Things First (FTF)</li>
+<li>Three-Level Scale</li>
+</ul>
+<p>A Priorização foi realizada pela Ana.</p>
+<h3 id="modelagem"><a> Modelagem </a></h3>
+<p>Foram utilizados algumas técnicas para modelar os requisitos. Aqui vamos comentar sobre um pouco de cada um:</p>
+<h4 id="cenarios"><a>Cenários</a></h4>
+<p>Os <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/Cenarios/">cenários</a> estão presentes para representar algumas possíveis histórias. O Documento foi feito pelo: João Lucas e Eduardo</p>
+<h4 id="lexicos"><a>Léxicos</a></h4>
+<p>Os <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/Lexicos/">Léxicos</a> estão presentes quando o grupo precisou identificar palavras-chaves ou frases com relação as etapas presentes no aplicativo. Foi desenvolvida por: Ana.</p>
+<h4 id="casos-de-uso"><a>Casos de Uso</a></h4>
+<p>Os <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/CasosdeUso/">Casos de Uso</a> são processos que descrevem um conjunto de ações entre o usuário e o sistema e isso gera um resultado observável. Foi levantado tabelas e diagramas para representar os casos de uso. Desenvolvido por: Thiago, Pedro e Eduardo.</p>
+<h4 id="especificacao-suplementar"><a>Especificação Suplementar</a></h4>
+<p>O Grupo buscou a metodologia FURPS+ para identificar as <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/EspecificacaoSuplementar/">especificações suplementares</a> e assim identificar informações adicionais sobre os requisitos. Foi desenvolvido por: Arthur e Eduardo.</p>
+<h4 id="nfr-framework"><a>NFR Framework</a></h4>
+<p>Utilizamos esse <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/NFRFramework/">framework</a> para conduzir melhor o processo de Design, colocando os requisitos não funcionais em primeiro lugar</p>
+<h4 id="historias-de-usuariso"><a>Histórias de Usuáriso</a></h4>
+<p>As <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/UserCases/">histórias de usuários</a> levantaram desejos do usuário dentro do aplicativo e também seus objetivos. Desenvolvido por Thiago e Pedro Lucas.</p>
+<h4 id="backlog"><a>Backlog</a></h4>
+<p>Por fim, fizemos uma lista de afazeres, conhecido como <a href="https://requisitos-de-software.github.io/2022.2-MEI/Modelagem/UserCases/">Backlog</a>. Feito por: Arthur</p>
+<h3 id="pos-rastreabilidade"><a>Pós-Rastreabilidade</a></h3>
+<p>Aqui ligamos os requisitos que são desenvolvidos ao longo do ciclo de vida do projeto com seus artefatos. O Grupo desenvolveu 3 artefatos:</p>
+<ul>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Pos-Rastreabilidade/BackwardFrom/">Backward-from</a> - Feito por: Pedro Lucas e Eduardo</li>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Pos-Rastreabilidade/ForwardFrom/">Forward-from</a> - Feito por: Thiago e João Lucas</li>
+<li><a href="https://requisitos-de-software.github.io/2022.2-MEI/Pos-Rastreabilidade/MatrizGeral/">Matriz Geral</a> - Feito por: Ana Luiza e Arthur.</li>
+</ul>
+<h2 id="artefatos"><a>Artefatos</a></h2>
+<p>A seguir estão apresentadas as tabelas referentes a cada etapa do projeto. Vale destacar que a <strong>Etapa 5: Verificação e Validação</strong> está apresentada no tópico <a href="#vv">V&amp;V</a>.</p>
+<h3 id="etapa-1-planejamento"><a>Etapa 1: Planejamento</a></h3>
+<p>A tabela 7 abaixo apresenta os artefatos criados durante o projeto na <strong>Etapa 1: Planejamento</strong>, com o nome de seus respectivos criadores e revisores.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Criador</th>
+<th>Revisor</th>
+<th>Data de Finalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../">Página inicial do projeto</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>20/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/AplicativosAnalisados/">Aplicativos Analisados</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>30/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/MEI/">Aplicativo Escolhido</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>20/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/Metodologia/">Metodologia e Processos</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a><br> <a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>30/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/Ferramentas/">Ferramentas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br> <a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>21/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/Heatmap/">Heatmap</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>30/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Planejamento/Roadmap/">Roadmap</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>09/12/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/CodigoDeConduta/">Código de Conduta para Colaboradores</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDeContribuicao/">Política de Contribuição</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDeIssue/">Política de Issue</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDeBranch/">Política de Branch</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDeCommit/">Política de Commit</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDePR/">Política de Pull Request</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td>Políticas - <a href="../Politicas/PolitcaDeSeguranca/">Política de Segurança</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>11/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/Cronogramas/">Cronograma de Elicitação/Priorização</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>07/12/2022</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/ModeloTermoConsentimento/">Termo de Consentimento</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>20/01/2023</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 7 - Artefatos realizados durante a etapa 1</em>
+<br><br></p>
+<p></center></p>
+<h3 id="etapa-2-elicitacao"><a>Etapa 2: Elicitação</a></h3>
+<p>A tabela 8 abaixo apresenta os artefatos criados durante o projeto durante a <strong>Etapa 2: Elicitação - Técnicas e Priorização</strong>, com o nome de seus respectivos criadores e revisores.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Criador</th>
+<th>Revisor</th>
+<th>Data de Finalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../Elicitacao/">Técnicas de Elicitação</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>30/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/Brainstorming/">Brainstorming</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td>20/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/Entrevista/">Entrevista</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>20/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/Introspeccao/">Introspecção</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>20/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/perfil/">Perfil do Usuário</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>26/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/personas/">Persona</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>30/11/2022</td>
+</tr>
+<tr>
+<td><a href="../Elicitacao/tecnicas-priorizacao/">Priorização</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>04/12/2022</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 8 - Artefatos realizados durante a etapa 2</em>
+<br><br></p>
+<p></center></p>
+<h3 id="etapas-3-e-4-modelagem"><a>Etapas 3 e 4: Modelagem</a></h3>
+<p>A tabela 9 abaixo apresenta os artefatos criados durante o projeto durante a <strong>Etapas 3 e 4: Modelagem de Requisitos</strong>, com o nome de seus respectivos criadores e revisores.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Criador</th>
+<th>Revisor</th>
+<th>Data de Finalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../Modelagem/Cenarios/">Cenários</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>10/12/2022</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/Lexicos/">Léxicos</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td>10/12/2022</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/CasosdeUso/">Casos de Uso</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/edudsan">Eduardo</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td>23/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/EspecificacaoSuplementar/">Especificação Suplementar</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>04/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/NFRFramework/">NFR Framework</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>28/12/2022</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/UserCases/">Histórias de Usuário</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>25/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Modelagem/Agil/BacklogDoProduto/">Backlog</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>02/01/2023</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 9 - Artefatos realizados durante as etapas 3 e 4</em>
+<br><br></p>
+<p></center></p>
+<h3 id="etapa-6-pos-rastreabilidade"><a>Etapa 6: Pós-Rastreabilidade</a></h3>
+<p>A tabela 10 abaixo apresenta os artefatos criados durante o projeto durante a <strong>Etapa 6: Pós-Rastreabilidade</strong>, com o nome de seus respectivos criadores e revisores.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Criador</th>
+<th>Revisor</th>
+<th>Data de Finalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../Pos-Rastreabilidade/BackwardFrom/">Backward-from</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a><br><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>23/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Pos-Rastreabilidade/ForwardFrom/">Forward-from</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>27/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Pos-Rastreabilidade/MatrizGeral/">Matriz Geral</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td>23/01/2023</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 10 - Artefatos realizados durante a etapa 6</em>
+<br><br>
+<strong>Total de artefatos:</strong> 50*.
+<br><br></p>
+<p></center></p>
+<p>*Esse número leva em consideração os artefatos presentes em <a href="#vv">V&amp;V</a>.</p>
+<h3 id="contagem-individual"><a>Contagem Individual</a></h3>
+<p>A tabela 11 abaixo apresenta a quantidade total de artefatos criados e revisados por cada integrante, incluindo durante a etapa de <a href="#vv">V&amp;V</a>. Vale lembrar que as gravações com os usuários não são contabilizados na listagem.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Integrante</th>
+<th>Criados</th>
+<th>Revisados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>21</td>
+<td>20</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td>10</td>
+<td>9</td>
+</tr>
+<tr>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>9</td>
+<td>5</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>14</td>
+<td>31</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td>11</td>
+<td>7</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td>16</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 11 - Artefatos por integrante</em>
+<br><br></p>
+<p></center></p>
+<h3 id="comentarios"><a>Comentários</a></h3>
+<ul>
+<li>O número total de artefatos criados é inferior à soma dos artefatos criados por cada integrante. Isso se deve ao fato de que diversos integrantes participaram da criação de um mesmo artefato;</li>
+<li>Os integrantes <a href="https://github.com/PedroLSF">Pedro Lucas</a>, <a href="https://github.com/edudsan">Eduardo</a> e <a href="https://github.com/Eruel6">Arthur Taylor</a> foram responsáveis por realizar as gravações com os usuários;</li>
+<li>O integrante <a href="https://github.com/Eruel6">Arthur Taylor</a> foi o responsável por criar as atas de reunião e apresentações;</li>
+<li>O questionário sobre o perfil do usuário foi criado e divulgado pelo integrante <a href="https://github.com/edudsan">Eduardo</a>.</li>
+</ul>
+<h2 id="resultados"><a>Resultados</a></h2>
+<p>Acreditamos que o objetivo primordial desse projeto, aplicar na prática o que foi aprendido em sala de aula, foi alcançado de diferentes formas. No início, os resultados não foram satisfatórios, deixando muito a desejar. As técnicas e conceitos foram aplicados de forma incorreta e, com isso, o trabalho iniciou "com o pé esquerdo". Apesar desse fato, o grupo conseguiu se reorganizar e melhorar muito a qualidade dos artefatos que estavam sendo elaborados a partir das <a href="#etapas-3-e-4-modelagem">Etapas 3 e 4</a>, sem deixar de lado as melhorias a serem realizadas nos artefatos iniciais. Com isso em mente, pode-se afirmar que a aplicação de técnicas e conceitos aprendidos em sala foi realizada com sucesso durante o projeto.</p>
+<p>O outro objetivo do projeto, não menos importante que o primeiro apresentado, era analisar um aplicativo. O MEI foi escolhido após a elaboração e análise dos diferentes <a href="../Planejamento/AplicativosAnalisados/">Rich Pictures</a> elaborados pelos integrantes do grupo. Após a escolha do aplicativo, foi possível iniciar a aplicação dos conceitos e ténicas aprendidos, por meio da realização das fases de <strong>Planejamento</strong>, <strong>Elicitação e Priorização</strong>, <strong>Modelagem</strong> e <strong>Pós-rastreabilidade</strong>.</p>
+<p>Todos os integrantes presentes nas tabelas de <a href="#artefatos">Artefatos</a> participaram ativamente do projeto. Seja por meio da elaboração direta de artefatos ou da realização de pesquisas e entrevistas com os usuários, todos participaram dando o melhor de si. Todos concordam: houve grande desenvolvimento de softskills. As mais notáveis foram:</p>
+<ul>
+<li>Organização;</li>
+<li>Planejamento;</li>
+<li>Resiliência.</li>
+</ul>
+<p>A seguir, confira um resumo dos resultados mais notáveis do projeto.</p>
+<h3 id="perfil-do-usuario"><a>Perfil do Usuário</a></h3>
+<p>O <a href="../Elicitacao/perfil/">Perfil do Usuário</a> identificado pelo grupo é semelhante ao perfil encontrado em estudos realizados por outros pesquisadores [2]. Esse fato dá suporte aos dados obtidos pelo grupo, que são compatíveis com os obtidos por meio de pesquisas oficiais de grandes empresas.</p>
+<h3 id="requisitos"><a>Requisitos</a></h3>
+<p>Diversos requisitos elicitados não são atendidos pelo aplicativo atual. Com isso em mente, foi possível realizar uma priorização de requisitos e determinar quais eram os mais importantes de serem implementados ou melhorados. Também foi possível criar <a href="../Modelagem/NFRFramework/">SIGs</a> que mapeiam de forma clara o que é e o que não é atendido pelo sistema atualmente.</p>
+<h3 id="prototipo-de-alta-fidelidade"><a>Protótipo de Alta Fidelidade</a></h3>
+<p>O <a href="../Analise/Validacao/protAlta/">Protótipo de Alta Fidelidade</a> foi elaborado pelo integrante <a href="https://github.com/HacKairos">João Lucas</a>, em colaboração com <a href="https://github.com/Eruel6">Arthur Taylor</a>, e aprovado por todo o grupo (Ana, Pedro, Thiago e Eduardo). Sua criação visava melhorar pontos críticos, como a segurança do aplicativo, a partir do resultado da análise e modelagem de requisitos. Confira aqui o <a href="https://www.figma.com/proto/YVsTmRLQiocQb1d258RRZE/MEI?node-id=1%3A11&amp;starting-point-node-id=1%3A9">Protótipo</a>.</p>
+<h2 id="vv"><a>V&amp;V</a></h2>
+<h3 id="verificacao"><a>Verificação</a></h3>
+<p>Para realizar a verificação dos artefatos do projeto, foram escolhidas pessoas não envolvidas na criação de cada artefato. Com isso, buscava-se encontrar erros não percebidos pelo criador e/ou revisor do mesmo até então.</p>
+<p>A metodologia adotada foi a <a href="../Analise/Verificacao/#inspecao">Inspeção</a> com o auxílio de <a href="../Analise/#metodo-de-avaliacao">Checklists</a>. Na tabela X abaixo, Autor representa o criador da checklist e Revisor o responsável por aplicar a inspeção.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Artefato</th>
+<th>Autor</th>
+<th>Revisor</th>
+<th>Data de Aplicação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../Analise/Verificacao/Planejamento/VerificacaoRichPicture/">Rich Picture</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>09/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Planejamento/verificacaoAplicativoEscolhido/">Aplicativo Escolhido</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Planejamento/verificacaoTermoConsentimento/">Termo de Consentimento</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/Verifica%C3%A7%C3%A3oBrainstorming/">Brainstorming</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/VerificacaoEntrevista/">Entrevista</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/VerificacaoInstropeccao/">Introspecção</a></td>
+<td><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/VerificacaoPerfilUsuario/">Perfil de Usuário</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/VerificacaoPersonas/">Personas</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Elicitacao/VerificacaoPriorizacao/">Priorização</a></td>
+<td><a href="https://github.com/Eruel6">Arthur Taylor</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/Eruel6">Arthur Taylor</a></td>
+<td>18/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/VerificacaoLexicos/">Léxicos</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/VerificacaoCenarios/">Cenários</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/verificacaoCasosdeUso/">Casos de Uso</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/VerificacaoEspecifacao/">Especificação Suplementar</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/verificacaoNFRFramework/">NFR Framework</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Verificacao/Modelagem/verificacaoBacklog/">Backlog</a></td>
+<td><a href="https://github.com/edudsan">Eduardo</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 12 - Artefatos de verificação</em>
+<br><br></p>
+<p></center></p>
+<h3 id="validacao"><a>Validação</a></h3>
+<p>Para realizar a <a href="../Analise/Validacao/">Validação</a>, foram escolhidas as técnicas de validação informal e prototipagem. Essas técnicas permitem que um stakeholder comente sobre o trabalho realizado até então.</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Criador</th>
+<th>Revisor</th>
+<th>Data de Finalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../Analise/Validacao/Informal/">Validação Informal</a></td>
+<td><a href="https://github.com/Thiab394">Thiago Oliveira</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/AnHoff">Ana Luiza</a></td>
+<td>16/01/2023</td>
+</tr>
+<tr>
+<td><a href="../Analise/Validacao/protAlta/">Prototipagem</a></td>
+<td><a href="https://github.com/AnHoff">Ana Luiza</a><br><a href="https://github.com/HacKairos">João Lucas</a></td>
+<td><a href="https://github.com/HacKairos">João Lucas</a><br><a href="https://github.com/PedroLSF">Pedro Lucas</a></td>
+<td>15/01/2023</td>
+</tr>
+</tbody>
+</table>
+<p><em>Tabela 13 - Artefatos de validação</em>
+<br><br></p>
+<p></center></p>
+<h2 id="bibliografia"><a>BIbliografia</a></h2>
+<p>[1] 2022.1-YouTube. Disponível em: https://requisitos-de-software.github.io/2022.1-Youtube/apresentacao-final/. Acesso em: 27 de Janeiro de 2023.</p>
+<p>[2] Análise do perfil do Microempreendedor Individual (MEI). Disponível em: https://www.jurozero.sc.gov.br/padrao-categoria-noticias/342-analise-do-perfil-do-microempreendedor-individual-mei.html. Acesso em 20 de Janeiro de 2023.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Voltar para o topo
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+      
+        
+        <a href="../Pos-Rastreabilidade/MatrizGeral/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Matriz Geral" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Matriz Geral
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "navigation.tabs", "navigation.top", "navigation.indexes"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de Transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de Transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Perdido", "select.version.title": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>
